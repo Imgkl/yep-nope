@@ -51,7 +51,6 @@ class _MyHomePageState extends State<MyHomePage> {
       statusBarColor: Colors.transparent,
     ));
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidht = MediaQuery.of(context).size.width;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
