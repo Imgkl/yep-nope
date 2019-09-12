@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: FutureBuilder<Api>(
