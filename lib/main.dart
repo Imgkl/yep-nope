@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:yeah_nah/api.dart';
 import 'package:http/http.dart' as http;
-import 'package:shake/shake.dart';
 
 void main() => runApp(MyApp());
 
@@ -35,8 +34,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     getApi();
   }
-
-  ShakeDetector detector = ShakeDetector.autoStart(onPhoneShake: () {});
 
   Future<Api> getApi() async {
     var response = await http.get(url);
