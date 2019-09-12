@@ -1,9 +1,10 @@
 import 'dart:convert';
-
+import 'dart:ui' as bd;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:yeah_nah/api.dart';
 import 'package:http/http.dart' as http;
+import 'package:shake/shake.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,8 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(canvasColor: Colors.white),
       debugShowCheckedModeBanner: false,
-      title: "YeNah",
+      title: "Yep/Nope",
       home: MyHomePage(),
     );
   }
@@ -34,6 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
     getApi();
   }
 
+  ShakeDetector detector = ShakeDetector.autoStart(onPhoneShake: () {});
+
   Future<Api> getApi() async {
     var response = await http.get(url);
 
@@ -46,8 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent,));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: FutureBuilder<Api>(
@@ -56,17 +61,35 @@ class _MyHomePageState extends State<MyHomePage> {
           if (snapshot.hasData) {
             return Stack(
               children: <Widget>[
-                Image.network(
-                  snapshot.data.image,
+                FadeInImage.assetNetwork(
+                  placeholder: "assets/10.gif",
                   width: double.infinity,
                   height: double.infinity,
                   fit: BoxFit.fitHeight,
+                  image: snapshot.data.image,
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Text(
-                    snapshot.data.answer,
-                    style: TextStyle(fontSize: 80, color: Colors.white),
+                  child: Container(
+                    width: double.infinity,
+                    height: 180,
+                    child: ClipRect(
+                      child: BackdropFilter(
+                        filter: bd.ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+                        child: Center(
+                          child: Text(
+                            snapshot.data.answer.toUpperCase(),
+                            style: TextStyle(
+                                fontSize: 80,
+                                fontFamily: "fonta",
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 7.5,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
