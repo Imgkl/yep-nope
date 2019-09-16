@@ -2,15 +2,23 @@
 
 ## Description
 
-A Flutter application which has ability to choose decisions for you. 
+A Flutter application which has ability to choose decisions for you. This application uses a <b> Yes or No API </b>.
 
 ## Demo
 
+<img src="https://github.com/Imgkl/yep-nope/blob/master/Screenshot_20190913-010538.jpg" height="500"> <img src="https://github.com/Imgkl/yep-nope/blob/master/Screenshot_20190913-010452.jpg" height="500">
+
+
 ## Code 
+<img src="https://github.com/Imgkl/yep-nope/blob/master/code.png">
 
 
 ## Checklist
 
+- [x] API Implementation
+- [x] Refresh Button
+- [x] Loading Animation
+- [ ] Network Sensitivity error message.
 
 ## Tested on
 
@@ -20,4 +28,7 @@ A Flutter application which has ability to choose decisions for you.
 
 ## Contribution
 
-Feel free to contribute by issuing PR and if it is good, I'll merge it for sure.
+Feel free to contribute by creating PR and if it is any good, I'll merge it for sure.
+
+## Follow
+![Twitter Follow](https://img.shields.io/twitter/follow/im_gkl?label=Follow&style=for-the-badge)
