@@ -1,4 +1,4 @@
-# Yep/Nope
+# Yep/Nope [![Codemagic build status](https://api.codemagic.io/apps/5d78a17e55e230001ad02de0/5d78a17e55e230001ad02ddf/status_badge.svg)](https://codemagic.io/apps/5d78a17e55e230001ad02de0/5d78a17e55e230001ad02ddf/latest_build)
 
 ## Description
 
