@@ -15,10 +15,10 @@ A Flutter application which has ability to choose decisions for you. This applic
 
 ## Checklist
 
-- [x] API Implementation
-- [x] Refresh Button
-- [x] Loading Animation
-- [ ] Network Sensitivity error message.
+- [x] API implementation
+- [x] Refresh button
+- [x] Loading animation
+- [x] Network sensitive error messages.
 
 ## Tested on
 
