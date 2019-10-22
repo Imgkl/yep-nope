@@ -1,20 +1,33 @@
 import 'dart:convert';
 import 'dart:ui' as bd;
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:yeah_nah/api.dart';
 import 'package:http/http.dart' as http;
+import 'package:yeah_nah/error.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  bool result = await DataConnectionChecker().hasConnection;
+  if (result == true) {
+    print('YAY! Free cute dog pics!');
+    runApp(MyApp());
+  } else {
+    runApp(Error());
+  }
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(canvasColor: Colors.white),
-      debugShowCheckedModeBanner: false,
-      title: "Yep/Nope",
-      home: MyHomePage(),
+    return ConnectivityAppWrapper(
+      app: MaterialApp(
+        theme: ThemeData(canvasColor: Colors.white),
+        debugShowCheckedModeBanner: false,
+        title: "Yep/Nope",
+        home: MyHomePage(),
+      ),
     );
   }
 }
@@ -54,105 +67,109 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: Stack(
-        children: <Widget>[
-          Image.asset("assets/10.gif",
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.fitHeight),
-          FutureBuilder<Api>(
-            future: getApi(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Stack(
-                  children: <Widget>[
-                    FadeInImage.assetNetwork(
-                      placeholder: "assets/10.gif",
-                      width: double.infinity,
-                      height: double.infinity,
-                      fit: BoxFit.fitHeight,
-                      image: snapshot.data.image,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
+      body: ConnectivityWidgetWrapper(
+        disableInteraction: true,
+        child: Stack(
+          children: <Widget>[
+            Image.asset("assets/10.gif",
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.fitHeight),
+            FutureBuilder<Api>(
+              future: getApi(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Stack(
+                    children: <Widget>[
+                      FadeInImage.assetNetwork(
+                        placeholder: "assets/10.gif",
                         width: double.infinity,
-                        height: screenHeight * 0.177,
-                        child: ClipRect(
-                          child: BackdropFilter(
-                            filter: bd.ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                            child: Center(
-                              child: Text(
-                                snapshot.data.answer.toUpperCase(),
-                                style: TextStyle(
-                                    fontSize: 80,
-                                    fontFamily: "fonta",
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 7.5,
-                                    color: Colors.white),
+                        height: double.infinity,
+                        fit: BoxFit.fitHeight,
+                        image: snapshot.data.image,
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          width: double.infinity,
+                          height: screenHeight * 0.177,
+                          child: ClipRect(
+                            child: BackdropFilter(
+                              filter:
+                                  bd.ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+                              child: Center(
+                                child: Text(
+                                  snapshot.data.answer.toUpperCase(),
+                                  style: TextStyle(
+                                      fontSize: 80,
+                                      fontFamily: "fonta",
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 7.5,
+                                      color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 18.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              RaisedButton(
-                                elevation: 5,
-                                color: Colors.red,
-                                child: Text(
-                                  "Yep/Nope",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: "fonta",
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 2),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 18.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                RaisedButton(
+                                  elevation: 5,
+                                  color: Colors.red,
+                                  child: Text(
+                                    "Yep/Nope",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "fonta",
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 2),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40)),
+                                  onPressed: () {
+                                    setState(() {
+                                      getApi();
+                                    });
+                                  },
                                 ),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40)),
-                                onPressed: () {
-                                  setState(() {
-                                    getApi();
-                                  });
-                                },
-                              ),
-                              SizedBox(
-                                height: screenHeight * 0.15,
-                              )
-                            ],
-                          ),
-                        ],
+                                SizedBox(
+                                  height: screenHeight * 0.15,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                return Center(
+                  child: Stack(
+                    children: <Widget>[
+                      Image.asset(
+                        "assets/10.gif",
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.fitHeight,
+                      )
+                    ],
+                  ),
                 );
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-              return Center(
-                child: Stack(
-                  children: <Widget>[
-                    Image.asset(
-                      "assets/10.gif",
-                      width: double.infinity,
-                      height: double.infinity,
-                      fit: BoxFit.fitHeight,
-                    )
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
