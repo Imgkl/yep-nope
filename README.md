@@ -6,7 +6,7 @@ A Flutter application which has ability to choose decisions for you. This applic
 
 ## Demo
 
-<img src="https://github.com/Imgkl/yep-nope/blob/master/Screenshot_20190913-010538.jpg" height="500"> <img src="https://github.com/Imgkl/yep-nope/blob/master/Screenshot_20190913-010452.jpg" height="500">
+<img src="https://github.com/Imgkl/yep-nope/blob/master/preview/1571765380242.png" height="500"> <img src="https://github.com/Imgkl/yep-nope/blob/master/preview/1571765388246.png" height="500">
 
 
 ## Code 
