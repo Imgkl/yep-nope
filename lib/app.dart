@@ -11,7 +11,10 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConnectivityAppWrapper(
       app: MaterialApp(
-        theme: ThemeData(canvasColor: Colors.white),
+        theme: ThemeData(
+          canvasColor: Colors.white,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
         debugShowCheckedModeBanner: false,
         title: "Yep/Nope",
         home: MyHomePage(),
