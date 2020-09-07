@@ -1,10 +1,15 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/home/gokul/Downloads/flutter"
-export "FLUTTER_APPLICATION_PATH=/home/gokul/Desktop/Flutter_Projects/Completed/yeah_nah"
+export "FLUTTER_ROOT=/Users/sai/Downloads/flutter"
+export "FLUTTER_APPLICATION_PATH=/Users/sai/Downloads/Projects/yep_nope"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
 export "SYMROOT=${SOURCE_ROOT}/../build/ios"
-export "FLUTTER_FRAMEWORK_DIR=/home/gokul/Downloads/flutter/bin/cache/artifacts/engine/ios"
+export "OTHER_LDFLAGS=$(inherited) -framework Flutter"
+export "FLUTTER_FRAMEWORK_DIR=/Users/sai/Downloads/flutter/bin/cache/artifacts/engine/ios"
 export "FLUTTER_BUILD_NAME=1.0.0"
 export "FLUTTER_BUILD_NUMBER=1"
+export "DART_OBFUSCATION=false"
+export "TRACK_WIDGET_CREATION=false"
+export "TREE_SHAKE_ICONS=false"
+export "PACKAGE_CONFIG=.packages"
